@@ -6,7 +6,6 @@ import KPI from '@/components/KPI';
 import BarChart from '@/components/BarChart';
 import DonutChart from '@/components/DonutChart';
 import Empty from '@/components/Empty';
-import Progress from '@/components/Progress';
 import { StatusChip, TypeChip } from '@/components/Chips';
 
 const Graficos = () => {

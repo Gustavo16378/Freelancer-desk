@@ -2,15 +2,14 @@ import { useState } from 'react';
 import { useAppStore } from '@/store';
 import { boardService } from '@/services/board';
 import { updateService } from '@/services/update';
-import { PROJECT_STATUSES, BOARD_COLUMNS, PRIORITIES, EVENT_TYPES } from '@/utils/constants';
-import { fmtDate, fmtBRL as _fmtBRL, daysBetween, todayISO } from '@/utils/date';
+import { PROJECT_STATUSES, BOARD_COLUMNS, EVENT_TYPES } from '@/utils/constants';
+import { fmtDate, daysBetween } from '@/utils/date';
 import { fmtBRL, cx } from '@/utils/misc';
 import Icon from '@/components/Icon';
 import Modal from '@/components/Modal';
 import Field from '@/components/Field';
 import Confirm from '@/components/Confirm';
 import Empty from '@/components/Empty';
-import Progress from '@/components/Progress';
 import { StatusChip, TypeChip, PriorityChip } from '@/components/Chips';
 import { ProjectModal } from './Projetos';
 import type { BoardCard, ProjectUpdate, Event as EventType } from '@/types';
@@ -180,7 +179,6 @@ const Kanban = ({ projectId: _projectId, cards, onNew, onEdit }: {
             )}
 
             {list.map(c => {
-              const p = PRIORITIES[c.priority] ?? PRIORITIES.media;
               const dueDiff = c.due ? daysBetween(new Date(), c.due) : null;
               const isOverdue = dueDiff !== null && dueDiff < 0;
               return (

@@ -155,7 +155,7 @@ interface StoreState {
 // ── Zustand store ─────────────────────────────────────────────────────────────
 export const useAppStore = create<StoreState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       ...seedData(),
 
       createProject(data) {

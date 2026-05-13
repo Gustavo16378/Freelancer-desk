@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useEvents, useAppStore } from '@/store';
 import { eventService } from '@/services/event';
 import { EVENT_TYPES } from '@/utils/constants';
-import { PT_MONTHS, PT_WEEKDAYS_SHORT, PT_MONTHS_SHORT, todayISO, parseDate, toISODate, fmtDate, startOfMonth, endOfMonth, startOfWeek, addDaysDate, addMonths, isSameDay, isSameMonth, daysBetween } from '@/utils/date';
+import { PT_MONTHS, PT_WEEKDAYS_SHORT, todayISO, parseDate, toISODate, fmtDate, startOfMonth, endOfMonth, startOfWeek, addDaysDate, addMonths, isSameDay, isSameMonth, daysBetween } from '@/utils/date';
 import { cx } from '@/utils/misc';
 import Icon from '@/components/Icon';
 import Modal from '@/components/Modal';

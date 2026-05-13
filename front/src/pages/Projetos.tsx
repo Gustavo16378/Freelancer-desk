@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useProjects } from '@/store';
 import { projectService } from '@/services/project';
-import { eventService } from '@/services/event';
-import { boardService } from '@/services/board';
-import { PROJECT_STATUSES, PROJECT_TYPES, BOARD_COLUMNS, PRIORITIES } from '@/utils/constants';
+import { PROJECT_STATUSES, PROJECT_TYPES } from '@/utils/constants';
 import { todayISO, toISODate, addDaysDate, fmtDate, daysBetween } from '@/utils/date';
 import { cx, fmtBRL } from '@/utils/misc';
 import Icon from '@/components/Icon';
