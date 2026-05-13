@@ -187,16 +187,16 @@ const PaymentModal = ({ open, onClose, payment }: { open: boolean; onClose: () =
   const set = <K extends keyof PaymentForm>(k: K, v: PaymentForm[K]) => setForm(f => f ? { ...f, [k]: v } : f);
   const valid = form.description.trim() && form.value > 0 && form.dueDate;
 
-  const save = () => {
+  const save = async () => {
     if (!valid) return;
     const patch = { ...form };
     if (patch.status === 'recebido' && !patch.paidAt) patch.paidAt = todayISO();
     if (patch.status === 'pendente') delete patch.paidAt;
-    if (payment?.id) paymentService.update(payment.id, patch);
-    else paymentService.create(patch);
+    if (payment?.id) await paymentService.update(payment.id, patch);
+    else await paymentService.create(patch);
     onClose();
   };
-  const remove = () => { if (payment?.id) paymentService.remove(payment.id); onClose(); };
+  const remove = async () => { if (payment?.id) await paymentService.remove(payment.id); onClose(); };
 
   return (
     <>

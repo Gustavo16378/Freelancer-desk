@@ -151,7 +151,7 @@ const Kanban = ({ projectId: _projectId, cards, onNew, onEdit }: {
   const byCol = (col: BoardCard['column']) => cards.filter(c => c.column === col);
 
   const handleDrop = (col: BoardCard['column']) => {
-    if (dragId) boardService.move(dragId, col);
+    if (dragId) void boardService.move(dragId, col);
     setDragId(null);
     setDropCol(null);
   };
@@ -240,13 +240,13 @@ const CardModal = ({ open, onClose, card, defaults }: {
   const set = <K extends keyof CardForm>(k: K, v: CardForm[K]) => setForm(f => f ? { ...f, [k]: v } : f);
   const valid = form.title.trim();
 
-  const save = () => {
+  const save = async () => {
     if (!valid) return;
-    if (card?.id) boardService.update(card.id, form);
-    else boardService.create(form);
+    if (card?.id) await boardService.update(card.id, form);
+    else await boardService.create(form);
     onClose();
   };
-  const remove = () => { if (card?.id) boardService.remove(card.id); onClose(); };
+  const remove = async () => { if (card?.id) await boardService.remove(card.id); onClose(); };
 
   return (
     <>
@@ -295,9 +295,9 @@ const UpdatesPanel = ({ projectId, updates }: { projectId: string; updates: Proj
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState('');
 
-  const register = () => {
+  const register = async () => {
     if (!text.trim()) return;
-    updateService.create(projectId, text.trim());
+    await updateService.create(projectId, text.trim());
     setText('');
   };
 
@@ -337,7 +337,7 @@ const UpdatesPanel = ({ projectId, updates }: { projectId: string; updates: Proj
                     <div>
                       <textarea className="field text-sm" value={editingText} onChange={e => setEditingText(e.target.value)} />
                       <div className="flex gap-2 mt-2">
-                        <button onClick={() => { updateService.update(u.id, { text: editingText }); setEditingId(null); }} className="btn btn-primary btn-sm">Salvar</button>
+                        <button onClick={async () => { await updateService.update(u.id, { text: editingText }); setEditingId(null); }} className="btn btn-primary btn-sm">Salvar</button>
                         <button onClick={() => setEditingId(null)} className="btn btn-ghost btn-sm">Cancelar</button>
                       </div>
                     </div>
@@ -348,7 +348,7 @@ const UpdatesPanel = ({ projectId, updates }: { projectId: string; updates: Proj
                         <button onClick={() => { setEditingId(u.id); setEditingText(u.text); }} className="btn btn-icon-sm btn-soft" style={{ width: 24, height: 24 }}>
                           <Icon name="edit" size={11} />
                         </button>
-                        <button onClick={() => updateService.remove(u.id)} className="btn btn-icon-sm btn-soft" style={{ width: 24, height: 24 }}>
+                        <button onClick={() => { void updateService.remove(u.id); }} className="btn btn-icon-sm btn-soft" style={{ width: 24, height: 24 }}>
                           <Icon name="trash" size={11} />
                         </button>
                       </div>

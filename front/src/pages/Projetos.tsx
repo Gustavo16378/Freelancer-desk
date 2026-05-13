@@ -181,13 +181,13 @@ export const ProjectModal = ({ open, onClose, project }: { open: boolean; onClos
   const set = <K extends keyof ProjectForm>(k: K, v: ProjectForm[K]) => setForm(f => f ? { ...f, [k]: v } : f);
   const valid = form.name.trim() && form.client.trim();
 
-  const save = () => {
+  const save = async () => {
     if (!valid) return;
-    if (project?.id) projectService.update(project.id, form);
-    else projectService.create(form);
+    if (project?.id) await projectService.update(project.id, form);
+    else await projectService.create(form);
     onClose();
   };
-  const remove = () => { if (project?.id) projectService.remove(project.id); onClose(); };
+  const remove = async () => { if (project?.id) await projectService.remove(project.id); onClose(); };
 
   return (
     <>

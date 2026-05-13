@@ -362,13 +362,13 @@ const EventModal = ({ open, onClose, event, defaultDate }: EventModalProps) => {
   const set = <K extends keyof EventForm>(k: K, v: EventForm[K]) => setForm(f => f ? { ...f, [k]: v } : f);
   const valid = form.title.trim() && form.date;
 
-  const save = () => {
+  const save = async () => {
     if (!valid) return;
-    if (event?.id) eventService.update(event.id, form);
-    else eventService.create(form);
+    if (event?.id) await eventService.update(event.id, form);
+    else await eventService.create(form);
     onClose();
   };
-  const remove = () => { if (event?.id) eventService.remove(event.id); onClose(); };
+  const remove = async () => { if (event?.id) await eventService.remove(event.id); onClose(); };
 
   return (
     <>
