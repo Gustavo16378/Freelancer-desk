@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAppStore } from '@/store';
 import { boardService } from '@/services/board';
 import { updateService } from '@/services/update';
-import { PROJECT_STATUSES, BOARD_COLUMNS, EVENT_TYPES } from '@/utils/constants';
+import { PROJECT_STATUSES, BOARD_COLUMNS, PRIORITIES, EVENT_TYPES } from '@/utils/constants';
 import { fmtDate, daysBetween } from '@/utils/date';
 import { fmtBRL, cx } from '@/utils/misc';
 import Icon from '@/components/Icon';
