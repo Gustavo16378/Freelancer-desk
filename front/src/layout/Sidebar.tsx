@@ -58,19 +58,6 @@ const Sidebar = ({ activeRoute, onNav, onClose, mobile = false }: SidebarProps) 
         })}
       </nav>
 
-      <div className="px-3 pb-4 mt-2">
-        <a href="#/agenda" className="nav-item">
-          <Icon name="bell" size={17} />
-          <span className="flex-1">Notificações</span>
-          {alertsCount > 0 && (
-            <span className="num text-[10.5px] font-bold px-1.5 h-[18px] rounded-full flex items-center justify-center"
-              style={{ background: 'rgba(239,68,68,0.18)', color: '#ef4444' }}>
-              {alertsCount}
-            </span>
-          )}
-        </a>
-      </div>
-
       <div className="px-3 pb-4">
         <div className="card-hover p-3 rounded-card flex items-center gap-3"
           style={{ background: '#0e0e16', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }}>
