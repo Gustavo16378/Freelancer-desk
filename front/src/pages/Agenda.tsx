@@ -3,6 +3,7 @@ import { useEvents, useAppStore } from '@/store';
 import { eventService } from '@/services/event';
 import { EVENT_TYPES } from '@/utils/constants';
 import { PT_MONTHS, PT_WEEKDAYS_SHORT, todayISO, parseDate, toISODate, fmtDate, startOfMonth, endOfMonth, startOfWeek, addDaysDate, addMonths, isSameDay, isSameMonth, daysBetween } from '@/utils/date';
+import { holidaysOn } from '@/utils/holidays';
 import { cx } from '@/utils/misc';
 import Icon from '@/components/Icon';
 import Modal from '@/components/Modal';
@@ -110,12 +111,16 @@ const MonthView = ({ cursor, onCursor, selected, onSelect, eventsForDay }: {
           const isSelected = iso === selected;
           const inMonth = isSameMonth(c, cursor);
           const evs = eventsForDay(iso);
+          const hols = holidaysOn(iso);
           return (
             <div key={i} onClick={() => onSelect(iso)}
               className={cx('cal-cell', isToday && 'today', isSelected && 'selected', !inMonth && 'muted')}>
               <div className="flex items-center justify-between">
                 <span className="day-num">{c.getDate()}</span>
-                {isToday && <span className="dot" style={{ background: '#00b4d8', width: 5, height: 5 }} />}
+                <div className="flex items-center gap-1">
+                  {hols.length > 0 && <span className="dot" style={{ background: '#f59e0b', width: 5, height: 5 }} />}
+                  {isToday && <span className="dot" style={{ background: '#00b4d8', width: 5, height: 5 }} />}
+                </div>
               </div>
               {evs.length > 0 && (
                 <div className="flex flex-col gap-1 mt-auto">
@@ -144,6 +149,7 @@ const DayPanel = ({ date, eventsForDay, onEdit, onNew }: {
   const evs = eventsForDay(date);
   const dObj = parseDate(date);
   const projects = useAppStore(s => s.projects);
+  const hols = holidaysOn(date);
 
   return (
     <div className="card p-5 h-fit lg:sticky lg:top-[80px]">
@@ -154,6 +160,21 @@ const DayPanel = ({ date, eventsForDay, onEdit, onNew }: {
           {fmtDate(dObj, 'dd')} de <span className="lowercase">{PT_MONTHS[dObj.getMonth()]}</span> de {dObj.getFullYear()}
         </div>
       </div>
+
+      {hols.length > 0 && (
+        <div className="flex flex-col gap-1.5 mb-3">
+          {hols.map(h => (
+            <div key={h.name} className="rounded-card px-3 py-2 flex items-center gap-2.5"
+              style={{ background: 'rgba(245,158,11,0.08)', boxShadow: 'inset 0 0 0 1px rgba(245,158,11,0.2)' }}>
+              <Icon name="flag" size={13} style={{ color: '#f59e0b', flexShrink: 0 } as React.CSSProperties} />
+              <div>
+                <div className="text-[12.5px] font-semibold" style={{ color: '#f59e0b' }}>{h.name}</div>
+                <div className="text-[11px] text-dim">Feriado nacional</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="flex flex-col gap-2.5 mb-4 max-h-[420px] overflow-auto -mr-2 pr-2">
         {evs.length === 0 ? (
