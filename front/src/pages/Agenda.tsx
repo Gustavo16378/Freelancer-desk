@@ -166,7 +166,7 @@ const DayPanel = ({ date, eventsForDay, onEdit, onNew }: {
           {hols.map(h => (
             <div key={h.name} className="rounded-card px-3 py-2 flex items-center gap-2.5"
               style={{ background: 'rgba(245,158,11,0.08)', boxShadow: 'inset 0 0 0 1px rgba(245,158,11,0.2)' }}>
-              <Icon name="flag" size={13} style={{ color: '#f59e0b', flexShrink: 0 } as React.CSSProperties} />
+              <span style={{ color: '#f59e0b', flexShrink: 0, display: 'flex' }}><Icon name="flag" size={13} /></span>
               <div>
                 <div className="text-[12.5px] font-semibold" style={{ color: '#f59e0b' }}>{h.name}</div>
                 <div className="text-[11px] text-dim">Feriado nacional</div>
