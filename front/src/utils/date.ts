@@ -32,17 +32,12 @@ export function fmtDate(d: Date | string | null | undefined, fmt = 'dd/MM/yyyy')
   const w = x.getDay();
   const h = x.getHours();
   const min = x.getMinutes();
-  return fmt
-    .replace('EEEE', PT_WEEKDAYS[w])
-    .replace('EEE', PT_WEEKDAYS_SHORT[w])
-    .replace('MMMM', PT_MONTHS[M])
-    .replace('MMM', PT_MONTHS_SHORT[M])
-    .replace('dd', pad(D))
-    .replace('d', String(D))
-    .replace('yyyy', String(Y))
-    .replace('MM', pad(M + 1))
-    .replace('HH', pad(h))
-    .replace('mm', pad(min));
+  const tokens: Record<string, string> = {
+    yyyy: String(Y), MMMM: PT_MONTHS[M], MMM: PT_MONTHS_SHORT[M], MM: pad(M + 1),
+    EEEE: PT_WEEKDAYS[w], EEE: PT_WEEKDAYS_SHORT[w],
+    HH: pad(h), mm: pad(min), dd: pad(D), d: String(D),
+  };
+  return fmt.replace(/yyyy|MMMM|MMM|MM|EEEE|EEE|HH|mm|dd|d/g, t => tokens[t]);
 }
 
 export function startOfMonth(d: Date): Date {

@@ -36,7 +36,7 @@ const Projetos = () => {
 
   return (
     <div className="p-5 md:p-7 w-full max-w-[1400px]">
-      <div className="flex items-center justify-between flex-wrap gap-4 mb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
         <div className="flex items-center gap-2 flex-wrap">
           <FilterChip active={filter === 'todos'} onClick={() => setFilter('todos')} label="Todos" count={counts.todos} />
           <FilterChip active={filter === 'em_andamento'} onClick={() => setFilter('em_andamento')} label="Em andamento" count={counts.em_andamento} dot="#00b4d8" />
@@ -45,11 +45,11 @@ const Projetos = () => {
           <FilterChip active={filter === 'pausado'} onClick={() => setFilter('pausado')} label="Pausado" count={counts.pausado} dot="#8b8b9a" />
         </div>
         <div className="flex items-center gap-2">
-          <div className="relative">
+          <div className="relative flex-1 sm:flex-none">
             <Icon name="search" size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-dim" />
-            <input className="field pl-9 w-[200px]" placeholder="Buscar..." value={search} onChange={e => setSearch(e.target.value)} />
+            <input className="field pl-9 w-full sm:w-[200px]" placeholder="Buscar..." value={search} onChange={e => setSearch(e.target.value)} />
           </div>
-          <button onClick={() => setEditing({})} className="btn btn-primary">
+          <button onClick={() => setEditing({})} className="btn btn-primary flex-shrink-0">
             <Icon name="plus" size={15} /> Novo projeto
           </button>
         </div>
