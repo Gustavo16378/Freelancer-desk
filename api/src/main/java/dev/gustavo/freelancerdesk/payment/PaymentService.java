@@ -38,6 +38,7 @@ public class PaymentService {
         existing.dueDate     = patch.dueDate;
         existing.status      = patch.status;
         existing.paidAt      = patch.paidAt;
+        existing.category    = patch.category != null ? patch.category : existing.category;
         return existing;
     }
 

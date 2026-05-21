@@ -21,6 +21,12 @@ const Dashboard = () => {
     .filter(p => p.status === 'recebido' && p.paidAt && parseDate(p.paidAt) >= monthStart)
     .reduce((s, p) => s + p.value, 0);
   const pending = payments.filter(p => p.status === 'pendente').reduce((s, p) => s + p.value, 0);
+  const suporteThisMonth = payments
+    .filter(p => p.category === 'suporte' && p.status === 'recebido' && p.paidAt && parseDate(p.paidAt) >= monthStart)
+    .reduce((s, p) => s + p.value, 0);
+  const suportePending = payments
+    .filter(p => p.category === 'suporte' && p.status === 'pendente')
+    .reduce((s, p) => s + p.value, 0);
   const activeProjects = projects.filter(p => p.status === 'em_andamento').length;
   const eventsToday = events.filter(e => e.date === todayIso).length;
 
@@ -53,7 +59,7 @@ const Dashboard = () => {
   return (
     <div className="p-5 md:p-7 w-full max-w-[1400px] flex flex-col gap-6">
       {/* KPIs */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         <div className="card p-5">
           <div className="flex items-start justify-between mb-3">
             <span className="text-[12px] uppercase tracking-wider text-dim font-semibold">Receita do mês</span>
@@ -68,8 +74,9 @@ const Dashboard = () => {
           </div>
         </div>
         <KPI label="A receber" value={fmtBRL(pending)} sub={`${payments.filter(p => p.status === 'pendente').length} pagamento(s)`} icon="money" accent="#f59e0b" />
+        <KPI label="Suporte/mês" value={fmtBRL(suporteThisMonth || suportePending)} sub={suporteThisMonth > 0 ? 'recebido este mês' : `${fmtBRL(suportePending)} a receber`} icon="bolt" accent="#8b5cf6" />
         <KPI label="Projetos ativos" value={activeProjects} sub={`${projects.length} no total`} icon="folder" accent="#00b4d8" />
-        <KPI label="Eventos hoje" value={eventsToday} sub={fmtDate(today, 'EEEE')} icon="calendar" accent="#8b5cf6" />
+        <KPI label="Eventos hoje" value={eventsToday} sub={fmtDate(today, 'EEEE')} icon="calendar" accent="#10b981" />
       </div>
 
       {/* Alertas */}

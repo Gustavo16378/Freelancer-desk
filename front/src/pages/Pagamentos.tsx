@@ -178,7 +178,7 @@ const PaymentModal = ({ open, onClose, payment }: { open: boolean; onClose: () =
     _setOpen(open);
     if (open) {
       setForm(payment ? { ...payment } : {
-        projectId: '', description: '', value: 0, dueDate: todayISO(), status: 'pendente',
+        projectId: '', description: '', value: 0, dueDate: todayISO(), status: 'pendente', category: 'projeto',
       });
     }
   }
@@ -221,6 +221,25 @@ const PaymentModal = ({ open, onClose, payment }: { open: boolean; onClose: () =
               <input type="date" className="field" value={form.dueDate} onChange={e => set('dueDate', e.target.value)} />
             </Field>
           </div>
+          <Field label="Tipo">
+            <div className="grid grid-cols-3 gap-2">
+              {([
+                { key: 'projeto', label: 'Projeto', color: '#00b4d8' },
+                { key: 'suporte', label: 'Suporte', color: '#8b5cf6' },
+                { key: 'outro',   label: 'Outro',   color: '#8b8b9a' },
+              ] as const).map(({ key, label, color }) => (
+                <button key={key} type="button" onClick={() => set('category', key)}
+                  className="flex items-center justify-center gap-1.5 px-2 py-2 rounded-btn text-[13px] font-medium transition-colors"
+                  style={{
+                    background: form.category === key ? `${color}1A` : '#1a1a24',
+                    color: form.category === key ? color : '#8b8b9a',
+                    boxShadow: form.category === key ? `inset 0 0 0 1px ${color}55` : 'inset 0 0 0 1px rgba(255,255,255,0.05)',
+                  }}>
+                  {label}
+                </button>
+              ))}
+            </div>
+          </Field>
           <Field label="Status">
             <div className="grid grid-cols-2 gap-2">
               {(['pendente', 'recebido'] as const).map(s => (

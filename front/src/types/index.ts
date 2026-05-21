@@ -27,12 +27,13 @@ export interface Event {
 
 export interface Payment {
   id: string;
-  projectId: string;
+  projectId?: string;
   description: string;
   value: number;
   dueDate: string;
   status: 'pendente' | 'recebido';
   paidAt?: string;
+  category: 'projeto' | 'suporte' | 'outro';
 }
 
 export interface BoardCard {

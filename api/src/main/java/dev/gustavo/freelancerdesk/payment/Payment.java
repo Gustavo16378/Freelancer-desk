@@ -17,8 +17,9 @@ public class Payment extends PanacheEntityBase {
     public String id;
 
     @Column(name = "project_id")
-    @NotBlank
     public String projectId;
+
+    public String category = "projeto";
 
     @NotBlank
     public String description;
